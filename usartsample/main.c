@@ -13,10 +13,8 @@
 void txEventListener() {
 }
 
-void rxEventListener(uint8_t data) {
-    printf("Interrupted\n");
-    USART_sendData(data);
-    printf("\n");
+void rxEventListener(uint8_t data) {    
+    printf("echo back: %d \n", data);
 }
 
 int main(void) {
@@ -24,7 +22,7 @@ int main(void) {
     USART_setRxCompletionInterruptListener(*rxEventListener);
     fdevopen(*USART_sendData, NULL);
     sei();
-    printf("Enter>>\n");
+    printf("Initialized>>\n");
     while (1) {
     }
 }
