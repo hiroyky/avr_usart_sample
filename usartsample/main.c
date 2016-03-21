@@ -10,21 +10,16 @@
 #include "usart.h"
 
 
-void txEventListener() {
-}
-
-void rxEventListener(uint8_t data) {
-    printf("Interrupted\n");
-    USART_sendData(data);
-    printf("\n");
+void rxEventListener(uint8_t data) {    
+    printf("echo back: %d \n", data);
 }
 
 int main(void) {
-    USART_init(TX_COMPLETION_INTERRUPT | RX_COMPLETION_INTERRUPT, 51);
+    USART_init(RX_COMPLETION_INTERRUPT, 51);
     USART_setRxCompletionInterruptListener(*rxEventListener);
     fdevopen(*USART_sendData, NULL);
     sei();
-    printf("Enter>>\n");
+    printf("Initialized>>\n");
     while (1) {
     }
 }
