@@ -14,16 +14,18 @@ void txEventListener() {
 }
 
 void rxEventListener(uint8_t data) {
-    printf(data);
+    printf("Interrupted\n");
+    USART_sendData(data);
+    printf("\n");
 }
 
 int main(void) {
     USART_init(TX_COMPLETION_INTERRUPT | RX_COMPLETION_INTERRUPT, 51);
+    USART_setRxCompletionInterruptListener(*rxEventListener);
     fdevopen(*USART_sendData, NULL);
+    sei();
     printf("Enter>>\n");
     while (1) {
-        uint8_t val = USART_recieveData();
-        USART_sendData(val);
     }
 }
 
